@@ -1,0 +1,112 @@
+{layout name="public/layout"}
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <span class="font-weight-bold text-primary">角色管理</span>
+        <a href="{:url('admin/role/create')}"><span class="m-0" style="float:right;" >添加角色</span></a>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                <tr>
+                    <th>序号</th>
+                    <th>角色名称</th>
+                    <th>创建人</th>
+                    <th>修改人</th>
+                    <th>创建时间</th>
+                    <th>修改时间</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                {volist name="roleList" id="role"}
+                <tr>
+                    <td>{$num++}</td>
+                    <td>{$role.name}</td>
+                    <td>{$role.create_user_name}</td>
+                    <td>{$role.update_user_name}</td>
+                    <td>{$role.create_time}</td>
+                    <td>{$role.update_time}</td>
+                    <td>
+                        <a href="javascript:void(0)" onclick="editRole({$role.id})">编辑</a> &nbsp;
+                        <a href="javascript:void(0)" onclick="deleteRole({$role.id})">删除</a> &nbsp;
+                        <a href="{:url('admin/role/allocation', ['id'=>$role.id])}">查看/分配权限</a> &nbsp;
+                    </td>
+                </tr>
+                {/volist}
+                </tbody>
+            </table>
+        </div>
+        <div class="pop-background"></div>
+        <div id="role-edit">
+            <div class="close">
+                <a href="javascript:void(0)" onclick="closeRoleEdit()">关闭</a>
+            </div>
+            <form action="{:url('admin/role/doEdit')}" method="post">
+                <input type="hidden"  id="editRoleId" name="id" value="" >
+                <input type="hidden"  name="update_user_name" value="{$userName}" >
+
+                <div class="edit-content">
+                    <div class="form-group">
+                        <label  class="col-sm-2 control-label">角色名称</label>
+                        <div class="col-sm-10">
+                            <input type="text" id="editRoleName" class="form-control" name="name" value="">
+                        </div>
+                    </div>
+                    <div style="margin-left:10px;">
+                        <button class="btn btn-success" type="submit">保存数据</button> &nbsp;
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+
+function editRole(id) {
+    $('#editRoleId').val(id);
+    $.ajax({
+        type:'post',
+        url: "{:url('admin/role/selectRole')}",
+        data : {id :id},
+        dataType: 'json',
+        success: function (data) {
+            if (data.message) {
+                popBox.css("display","none")
+                popLayer.css("display","none")
+                alert(data.message);
+            }
+
+            $('#editRoleName').val(data.name);
+        }
+    })
+
+    var popBox = $("#role-edit");
+    var popLayer = $(".pop-background");
+    popBox.css("display","block")
+    popLayer.css("display","block")
+}
+
+function deleteRole(id) {
+    if (confirm("确定要删除吗")) {
+        $.ajax({
+            type:'post',
+            url: "{:url('admin/role/delete')}",
+            data : {id :id},
+            dataType: 'json',
+            success: function (data) {
+                alert(data.message);
+                window.location.reload()
+            }
+        })
+    }
+}
+
+function closeRoleEdit() {
+    var popBox = $("#role-edit");
+    var popLayer = $(".pop-background");
+    popBox.css("display","none")
+    popLayer.css("display","none")
+}
+</script>

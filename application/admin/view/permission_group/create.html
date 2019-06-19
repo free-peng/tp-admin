@@ -1,0 +1,22 @@
+{layout name="public:layout" /}
+<div class="container-fluid">
+    <!-- Breadcrumbs-->
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item active">添加权限组</li>
+        <li class="breadcrumb-item active"><a href="{:url('admin/RightsGroups/index')}">返回</a></li>
+    </ol>
+
+    <form action="{:url('admin/RightsGroups/save')}" method="post">
+        <div class="row">
+            <div class="col-md-5">
+                <div class="form-group">
+                    <label class="h6">权限组名称</label>
+                    <input type="text" class="form-control" name="name" placeholder="权限组名称">
+                </div>
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary">提交</button>
+        <button type="reset" class="btn btn-warning">重置</button>
+    </form>
+</div>

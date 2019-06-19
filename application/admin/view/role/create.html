@@ -1,0 +1,24 @@
+{layout name="public:layout" /}
+<div class="container-fluid">
+    <!-- Breadcrumbs-->
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item active">添加用户</li>
+        <li class="breadcrumb-item active"><a href="{:url('admin/role/index')}">返回</a></li>
+    </ol>
+    <!-- <div class="card mb-3"> -->
+
+    <form action="{:url('admin/role/save')}" method="post">
+        <input type="hidden" name="create_user_name" value="{$userName}" />
+        <div class="row">
+            <div class="col-md-5">
+                <div class="form-group">
+                    <label class="h6">角色名称</label>
+                    <input type="text" class="form-control" name="name" placeholder="角色名称">
+                </div>
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary">提交</button>
+        <button type="reset" class="btn btn-warning">重置</button>
+    </form>
+</div>

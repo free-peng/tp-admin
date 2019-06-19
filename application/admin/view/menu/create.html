@@ -1,0 +1,63 @@
+{layout name="public:layout" /}
+<div class="container-fluid">
+    <!-- Breadcrumbs-->
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item active">添加菜单</li>
+        <li class="breadcrumb-item active"><a href="{:url('admin/menu/index')}">返回</a></li>
+    </ol>
+    <!-- <div class="card mb-3"> -->
+
+    <form action="{:url('admin/menu/store')}" method="post">
+        <input type="hidden" name="user_name" value="{$userName}" />
+
+        <div class="row">
+            <div class="col-md-5">
+                <div class="form-group">
+                    <label>菜单名称</label>
+                    <input type="text" class="form-control" name="name" placeholder="请输入菜单名称">
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-5">
+                <div class="form-group">
+                    <label>所属权限</label>
+                    <select name="permission_name" class="form-control">
+                        <option>--请选择--</option>
+                        {volist name="permissions" id="permission"}
+                        <option value="{$permission.name}">{$permission.show_name}</option>
+                        {/volist}
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-5">
+                <div class="form-group">
+                    <label>上级菜单</label>
+                    {$menuPresenter->select()|raw|htmlspecialchars_decode}
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-5">
+                <div class="form-group">
+                    <label>菜单URL</label>
+                    <input type="text" class="form-control" name="url" placeholder="菜单URL">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-5">
+                <div class="form-group">
+                    <label>菜单图标</label>
+                    <input type="text" class="form-control" name="icon" placeholder="菜单图标">
+                </div>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">提交</button>
+        <button type="reset" class="btn btn-warning">重置</button>
+    </form>
+</div>

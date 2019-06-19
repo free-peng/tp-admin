@@ -1,0 +1,54 @@
+{layout name="public/layout"}
+<div class="card shadow mb-4">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item active ">分配角色权限</li>
+        <li class="breadcrumb-item active"><a href="{:url('admin/Role/index')}">返回</a></li>
+    </ol>
+    <div class="card-body">
+        <form action="{:url('admin/role/allocationSave')}" method="post">
+        {foreach $rightGroupsList as $groupId=>$groupList}
+        <div class="group-top">
+            <div class="group-name">
+                {$groupId|getRightsGroups}
+            </div>
+        </div>
+        <div class="group-permission">
+            <ul class="permission-ul">
+                    {foreach $groupList as $value}
+                    <li class="permission-li">
+                        <input type="checkbox" name="permission[]" value="{$value.id}"
+                               {foreach $rolePermission as $item}
+                                    {if $item['permission_id'] == $value.id}
+                                        checked="checked "
+                                    {/if}
+                               {/foreach}
+                        >
+                        {$value.show_name}
+                    </li>
+                    {/foreach}
+                    <input type="hidden" name="role_id" value="{$roleId.id}">
+            </ul>
+        </div>
+        {/foreach}
+            <button class="allocation-button" type="submit" >分配角色</button>
+
+        </form>
+    </div>
+</div>
+
+<script>
+    function deleteGroup(id){
+        if (confirm("删除权限组会删除相关的权限，确定需要删除吗？")) {
+            $.ajax({
+                type:'post',
+                url: "{:url('admin/RightsGroups/deleteGroup')}",
+                data : {id :id},
+                dataType: 'json',
+                success: function (data) {
+                    alert(data.message);
+                    window.location.reload()
+                }
+            })
+        }
+    }
+</script>

@@ -1,0 +1,45 @@
+{layout name="public:layout" /}
+<div class="container-fluid">
+    <!-- Breadcrumbs-->
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item active">添加权限</li>
+        <li class="breadcrumb-item active"><a href="{:url('admin/permission/index')}">返回</a></li>
+    </ol>
+    <!-- <div class="card mb-3"> -->
+
+    <form action="{:url('admin/permission/save')}" method="post">
+        <div class="row">
+            <div class="col-md-5">
+                <div class="form-group">
+                    <label class="h6">权限名称</label>
+                    <input type="text" class="form-control" name="show_name" placeholder="请输入权限名称">
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-5">
+                <div class="form-group">
+                    <label class="h6">控制节点</label>
+                    <input type="text" class="form-control" name="name" placeholder="请输入控制节点">
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-5">
+                <div class="form-group">
+                    <label class="h6">选择权限组(必选)</label>
+                    <select class="form-control" name="group_id">
+                        {volist name="groups" id="group"}
+                            <option  value="{$group.id}">{$group.name}</option>
+                        {/volist}
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary">提交</button>
+        <button type="reset" class="btn btn-warning">重置</button>
+    </form>
+</div>
